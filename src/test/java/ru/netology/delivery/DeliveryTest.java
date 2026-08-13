@@ -38,7 +38,6 @@ class DeliveryTest {
                 .plusDays(daysToAddForSecondMeeting)
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-        // Первое планирование
         $("[data-test-id='city'] input")
                 .setValue(validUser.getCity());
 
@@ -61,7 +60,6 @@ class DeliveryTest {
         $("[data-test-id='success-notification']")
                 .shouldBe(visible);
 
-        // Перепланирование
         $("[data-test-id='date'] input")
                 .setValue(secondMeetingDateForInput);
 
