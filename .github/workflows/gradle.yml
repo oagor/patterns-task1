@@ -24,9 +24,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Start application
-        run: |
-          java -jar artifacts/app-replan-delivery.jar &
-          sleep 5
+        run: java -jar ./artifacts/app-replan-delivery.jar &
 
       - name: Run tests
         run: ./gradlew test -Dselenide.headless=true
