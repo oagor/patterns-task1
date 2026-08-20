@@ -18,6 +18,12 @@ public class DataGenerator {
                 .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 
+    public static String generateDateForInput(int shift) {
+        return LocalDate.now()
+                .plusDays(shift)
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
     public static String generateCity(Faker faker) {
         return faker.address().city();
     }

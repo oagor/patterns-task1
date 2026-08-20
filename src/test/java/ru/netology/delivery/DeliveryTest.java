@@ -6,9 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.netology.delivery.data.DataGenerator;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -26,15 +23,14 @@ class DeliveryTest {
         var validUser = DataGenerator.Registration.generateUser("ru");
 
         var daysToAddForFirstMeeting = 4;
+        var firstMeetingDate = DataGenerator.generateDate(daysToAddForFirstMeeting);
+        var firstMeetingDateForInput =
+                DataGenerator.generateDateForInput(daysToAddForFirstMeeting);
+
         var daysToAddForSecondMeeting = 7;
-
-        var firstMeetingDateForInput = LocalDate.now()
-                .plusDays(daysToAddForFirstMeeting)
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-        var secondMeetingDateForInput = LocalDate.now()
-                .plusDays(daysToAddForSecondMeeting)
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        var secondMeetingDate = DataGenerator.generateDate(daysToAddForSecondMeeting);
+        var secondMeetingDateForInput =
+                DataGenerator.generateDateForInput(daysToAddForSecondMeeting);
 
         $("[data-test-id='city'] input")
                 .setValue(validUser.getCity());
@@ -55,8 +51,14 @@ class DeliveryTest {
                 .findBy(Condition.text("Запланировать"))
                 .click();
 
-        $("[data-test-id='success-notification']")
+        var notification = $("[data-test-id='success-notification']")
                 .shouldBe(visible);
+
+        System.out.println("=== NOTIFICATION ===");
+        System.out.println(notification.getText());
+
+        System.out.println("=== EXPECTED DATE ===");
+        System.out.println(firstMeetingDate);
 
         $("[data-test-id='date'] input")
                 .clear();
