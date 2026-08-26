@@ -6,8 +6,8 @@ group = 'ru.netology'
 version = '1.0-SNAPSHOT'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 repositories {
@@ -19,7 +19,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    testImplementation 'com.codeborne:selenide:7.10.0'
+    testImplementation 'com.codeborne:selenide:6.19.1'
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
 
     testCompileOnly 'org.projectlombok:lombok:1.18.36'

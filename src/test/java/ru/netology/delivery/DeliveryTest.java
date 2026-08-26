@@ -22,15 +22,16 @@ class DeliveryTest {
 
         var validUser = DataGenerator.Registration.generateUser("ru");
 
-        var daysToAddForFirstMeeting = 4;
-        var firstMeetingDate = DataGenerator.generateDate(daysToAddForFirstMeeting);
-        var firstMeetingDateForInput =
-                DataGenerator.generateDateForInput(daysToAddForFirstMeeting);
+        var firstMeetingDate = DataGenerator.generateDate(4);
+        var firstMeetingDateForInput = DataGenerator.generateDateForInput(4);
 
-        var daysToAddForSecondMeeting = 7;
-        var secondMeetingDate = DataGenerator.generateDate(daysToAddForSecondMeeting);
-        var secondMeetingDateForInput =
-                DataGenerator.generateDateForInput(daysToAddForSecondMeeting);
+        var secondMeetingDate = DataGenerator.generateDate(7);
+        var secondMeetingDateForInput = DataGenerator.generateDateForInput(7);
+
+        System.out.println("ПЕРВАЯ ДАТА ДЛЯ ПРОВЕРКИ: " + firstMeetingDate);
+        System.out.println("ПЕРВАЯ ДАТА ДЛЯ INPUT: " + firstMeetingDateForInput);
+        System.out.println("ВТОРАЯ ДАТА ДЛЯ ПРОВЕРКИ: " + secondMeetingDate);
+        System.out.println("ВТОРАЯ ДАТА ДЛЯ INPUT: " + secondMeetingDateForInput);
 
         $("[data-test-id='city'] input")
                 .setValue(validUser.getCity());
@@ -54,11 +55,7 @@ class DeliveryTest {
         var notification = $("[data-test-id='success-notification']")
                 .shouldBe(visible);
 
-        System.out.println("=== NOTIFICATION ===");
-        System.out.println(notification.getText());
-
-        System.out.println("=== EXPECTED DATE ===");
-        System.out.println(firstMeetingDate);
+        System.out.println("ФАКТИЧЕСКИЙ ТЕКСТ: " + notification.getText());
 
         $("[data-test-id='date'] input")
                 .clear();
@@ -77,7 +74,10 @@ class DeliveryTest {
                 .findBy(Condition.text("Перепланировать"))
                 .click();
 
-        $("[data-test-id='success-notification']")
+        var secondNotification = $("[data-test-id='success-notification']")
                 .shouldBe(visible);
+
+        System.out.println("ФАКТИЧЕСКИЙ ТЕКСТ ПОСЛЕ ПЕРЕПЛАНИРОВАНИЯ: "
+                + secondNotification.getText());
     }
 }
