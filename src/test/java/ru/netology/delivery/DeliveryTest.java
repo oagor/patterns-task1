@@ -22,16 +22,11 @@ class DeliveryTest {
 
         var validUser = DataGenerator.Registration.generateUser("ru");
 
-        var firstMeetingDate = DataGenerator.generateDate(4);
-        var firstMeetingDateForInput = DataGenerator.generateDateForInput(4);
+        var firstMeetingDate = DataGenerator.generateDate(3);
+        var firstMeetingDateForInput = DataGenerator.generateDateForInput(3);
 
-        var secondMeetingDate = DataGenerator.generateDate(7);
-        var secondMeetingDateForInput = DataGenerator.generateDateForInput(7);
-
-        System.out.println("ПЕРВАЯ ДАТА ДЛЯ ПРОВЕРКИ: " + firstMeetingDate);
-        System.out.println("ПЕРВАЯ ДАТА ДЛЯ INPUT: " + firstMeetingDateForInput);
-        System.out.println("ВТОРАЯ ДАТА ДЛЯ ПРОВЕРКИ: " + secondMeetingDate);
-        System.out.println("ВТОРАЯ ДАТА ДЛЯ INPUT: " + secondMeetingDateForInput);
+        var secondMeetingDate = DataGenerator.generateDate(6);
+        var secondMeetingDateForInput = DataGenerator.generateDateForInput(6);
 
         $("[data-test-id='city'] input")
                 .setValue(validUser.getCity());
@@ -52,10 +47,8 @@ class DeliveryTest {
                 .findBy(Condition.text("Запланировать"))
                 .click();
 
-        var notification = $("[data-test-id='success-notification']")
+        $("[data-test-id='success-notification']")
                 .shouldBe(visible);
-
-        System.out.println("ФАКТИЧЕСКИЙ ТЕКСТ: " + notification.getText());
 
         $("[data-test-id='date'] input")
                 .clear();
@@ -74,10 +67,7 @@ class DeliveryTest {
                 .findBy(Condition.text("Перепланировать"))
                 .click();
 
-        var secondNotification = $("[data-test-id='success-notification']")
+        $("[data-test-id='success-notification']")
                 .shouldBe(visible);
-
-        System.out.println("ФАКТИЧЕСКИЙ ТЕКСТ ПОСЛЕ ПЕРЕПЛАНИРОВАНИЯ: "
-                + secondNotification.getText());
     }
 }
