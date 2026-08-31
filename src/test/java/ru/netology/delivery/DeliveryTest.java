@@ -1,11 +1,13 @@
 package ru.netology.delivery;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.netology.delivery.data.DataGenerator;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -19,55 +21,55 @@ class DeliveryTest {
     @Test
     @DisplayName("Should successful plan and replan meeting")
     void shouldSuccessfulPlanAndReplanMeeting() {
-
         var validUser = DataGenerator.Registration.generateUser("ru");
-
-        var firstMeetingDate = DataGenerator.generateDate(3);
-        var firstMeetingDateForInput = DataGenerator.generateDateForInput(3);
-
-        var secondMeetingDate = DataGenerator.generateDate(6);
-        var secondMeetingDateForInput = DataGenerator.generateDateForInput(6);
+        var firstMeetingDate = DataGenerator.generateDate(4);
+        var secondMeetingDate = DataGenerator.generateDate(7);
 
         $("[data-test-id='city'] input")
                 .setValue(validUser.getCity());
-
-        $("[data-test-id='date'] input")
-                .setValue(firstMeetingDateForInput);
-
+        setDate(firstMeetingDate);
         $("[data-test-id='name'] input")
                 .setValue(validUser.getName());
-
         $("[data-test-id='phone'] input")
                 .setValue(validUser.getPhone());
-
         $("[data-test-id='agreement']")
                 .click();
-
         $$("button")
-                .findBy(Condition.text("Запланировать"))
+                .findBy(text("Запланировать"))
                 .click();
 
         $("[data-test-id='success-notification']")
-                .shouldBe(visible);
+                .shouldBe(visible)
+                .shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate));
 
-        $("[data-test-id='date'] input")
-                .clear();
-
-        $("[data-test-id='date'] input")
-                .setValue(secondMeetingDateForInput);
-
+        setDate(secondMeetingDate);
         $$("button")
-                .findBy(Condition.text("Запланировать"))
+                .findBy(text("Запланировать"))
                 .click();
 
         $("[data-test-id='replan-notification']")
                 .shouldBe(visible);
 
         $$("button")
-                .findBy(Condition.text("Перепланировать"))
+                .findBy(text("Перепланировать"))
                 .click();
 
         $("[data-test-id='success-notification']")
-                .shouldBe(visible);
+                .shouldBe(visible)
+                .shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
+    }
+
+    private void setDate(String date) {
+        SelenideElement dateInput = $("[data-test-id='date'] input");
+        dateInput.shouldBe(Condition.visible);
+
+        executeJavaScript(
+                "var input = arguments[0];" +
+                        "var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;" +
+                        "nativeInputValueSetter.call(input, arguments[1]);" +
+                        "var event = new Event('input', { bubbles: true });" +
+                        "input.dispatchEvent(event);",
+                dateInput, date
+        );
     }
 }

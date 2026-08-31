@@ -20,7 +20,7 @@ public class DataGenerator {
 
     public static String generateDateForInput(int shift) {
         return LocalDate.now()
-                .plusDays(shift + 1)
+                .plusDays(shift)
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
