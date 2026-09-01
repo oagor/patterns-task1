@@ -1,63 +1,31 @@
-package ru.netology.delivery.data;
+public static String generateDate(int shift) {
+    return LocalDate.now()
+            .plusDays(shift)
+            .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+}
 
-import com.github.javafaker.Faker;
-import lombok.Value;
+public static String generateCity(Faker faker) {
+    return faker.address().city();
+}
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
+public static String generateName(Faker faker) {
+    return faker.name().fullName();
+}
 
-public class DataGenerator {
+public static String generatePhone(Faker faker) {
+    return faker.phoneNumber().phoneNumber();
+}
 
-    private DataGenerator() {
-    }
+public static class Registration {
+    private static Faker faker;
+    private Registration() {}
 
-    public static String generateDate(int shift) {
-        return LocalDate.now()
-                .plusDays(shift)
-                .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-    }
-
-    public static String generateDateForInput(int shift) {
-        return LocalDate.now()
-                .plusDays(shift)
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    }
-
-    public static String generateCity(Faker faker) {
-        return faker.address().city();
-    }
-
-    public static String generateName(Faker faker) {
-        return faker.name().fullName();
-    }
-
-    public static String generatePhone(Faker faker) {
-        return faker.phoneNumber().phoneNumber();
-    }
-
-    public static class Registration {
-
-        private static Faker faker;
-
-        private Registration() {
-        }
-
-        public static UserInfo generateUser(String locale) {
-            faker = new Faker(new Locale(locale));
-
-            return new UserInfo(
-                    generateCity(faker),
-                    generateName(faker),
-                    generatePhone(faker)
-            );
-        }
-    }
-
-    @Value
-    public static class UserInfo {
-        String city;
-        String name;
-        String phone;
+    public static UserInfo generateUser(String locale) {
+        faker = new Faker(new Locale(locale));
+        return new UserInfo(
+                generateCity(faker),
+                generateName(faker),
+                generatePhone(faker)
+        );
     }
 }

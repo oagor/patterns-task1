@@ -1,10 +1,10 @@
 package ru.netology.delivery;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Keys;
 import ru.netology.delivery.data.DataGenerator;
 
 import static com.codeborne.selenide.Condition.text;
@@ -61,15 +61,6 @@ class DeliveryTest {
 
     private void setDate(String date) {
         SelenideElement dateInput = $("[data-test-id='date'] input");
-        dateInput.shouldBe(Condition.visible);
-
-        executeJavaScript(
-                "var input = arguments[0];" +
-                        "var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;" +
-                        "nativeInputValueSetter.call(input, arguments[1]);" +
-                        "var event = new Event('input', { bubbles: true });" +
-                        "input.dispatchEvent(event);",
-                dateInput, date
-        );
+        dateInput.sendKeys(Keys.chord(Keys.CONTROL, "a"), date);
     }
 }
