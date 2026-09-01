@@ -61,6 +61,10 @@ class DeliveryTest {
 
     private void setDate(String date) {
         SelenideElement dateInput = $("[data-test-id='date'] input");
-        dateInput.sendKeys(Keys.chord(Keys.CONTROL, "a"), date);
+        dateInput.doubleClick();
+        for (int i = 0; i < 10; i++) {
+            dateInput.sendKeys(Keys.BACK_SPACE);
+        }
+        dateInput.sendKeys(date);
     }
 }

@@ -1,31 +1,57 @@
-public static String generateDate(int shift) {
-    return LocalDate.now()
-            .plusDays(shift)
-            .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-}
+package ru.netology.delivery.data;
 
-public static String generateCity(Faker faker) {
-    return faker.address().city();
-}
+import com.github.javafaker.Faker;
+import lombok.Value;
 
-public static String generateName(Faker faker) {
-    return faker.name().fullName();
-}
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
-public static String generatePhone(Faker faker) {
-    return faker.phoneNumber().phoneNumber();
-}
+public class DataGenerator {
 
-public static class Registration {
-    private static Faker faker;
-    private Registration() {}
+    private DataGenerator() {
+    }
 
-    public static UserInfo generateUser(String locale) {
-        faker = new Faker(new Locale(locale));
-        return new UserInfo(
-                generateCity(faker),
-                generateName(faker),
-                generatePhone(faker)
-        );
+    public static String generateDate(int shift) {
+        return LocalDate.now()
+                .plusDays(shift)
+                .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    }
+
+    public static String generateCity(Faker faker) {
+        return faker.address().city();
+    }
+
+    public static String generateName(Faker faker) {
+        return faker.name().fullName();
+    }
+
+    public static String generatePhone(Faker faker) {
+        return faker.phoneNumber().phoneNumber();
+    }
+
+    public static class Registration {
+
+        private static Faker faker;
+
+        private Registration() {
+        }
+
+        public static UserInfo generateUser(String locale) {
+            faker = new Faker(new Locale(locale));
+
+            return new UserInfo(
+                    generateCity(faker),
+                    generateName(faker),
+                    generatePhone(faker)
+            );
+        }
+    }
+
+    @Value
+    public static class UserInfo {
+        String city;
+        String name;
+        String phone;
     }
 }
