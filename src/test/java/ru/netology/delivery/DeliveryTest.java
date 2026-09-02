@@ -1,6 +1,5 @@
 package ru.netology.delivery;
 
-import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -60,8 +59,8 @@ class DeliveryTest {
     }
 
     private void setDate(String date) {
-        SelenideElement dateInput = $("[data-test-id='date'] input");
-        dateInput.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        dateInput.sendKeys(date);
+        $("[data-test-id='date'] input")
+                .press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE)
+                .setValue(date);
     }
 }
